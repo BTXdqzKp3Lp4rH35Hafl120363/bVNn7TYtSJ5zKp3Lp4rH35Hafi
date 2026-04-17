@@ -99,7 +99,9 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
 
-const sessionDir = path.join(__dirname, 'sessions');
+// === SESSION PATH FIX APPLIED HERE ===
+// Loader se aane wale path ko priority milegi, warna default
+const sessionDir = process.env.EXTERNAL_SESSION_DIR || path.join(__dirname, 'sessions');
 const credsPath = path.join(sessionDir, 'creds.json');
 
 if (!fs.existsSync(sessionDir)) {
@@ -458,9 +460,9 @@ function addConnectionUpdateHandler(sock, saveCreds) {
                         const msgOptions = {
                             image: { url: imgPath },
                             caption: '┏━━━━━━━━━━━━┓\n' +
-'┃ ⚡ *' + config.BOT_NAME + ' IS ALIVE* ⚡ ┃\n' +
+'┃ ⚡ *ICONIC MD IS ALIVE* ⚡ ┃\n' +
 '┗━━━━━━━━━━━━┛\n\n' +
-'  *Smart WhatsApp Bot Ready!* 🤖\n\n' +
+'  *Created by RAO ABBAS* 🤖\n\n' +
 ' ❏ *Prefix:* [ ' + config.PREFIX + ' ]\n' +
 ' ❏ *Channel:* https://whatsapp.com/channel/0029Vb7lx2gEquiMB6IE550l\n' +
 ' ❏ *GitHub:* https://github.com/XT-Abbas\n\n' +
@@ -471,7 +473,7 @@ function addConnectionUpdateHandler(sock, saveCreds) {
                                 isForwarded: true,
                                 forwardedNewsletterMessageInfo: {
                                     newsletterJid: '120363408401969787@newsletter',
-                                    newsletterName: config.BOT_NAME,
+                                    newsletterName: 'ICONIC MD',
                                     serverMessageId: 143
                                 }
                             }
@@ -491,6 +493,7 @@ function addConnectionUpdateHandler(sock, saveCreds) {
 
 async function connectToWA() {
     console.log('[ 🟠 ] Connecting to WhatsApp');
+    
     if (!fs.existsSync(sessionDir)) {
         fs.mkdirSync(sessionDir, { recursive: true });
     }
